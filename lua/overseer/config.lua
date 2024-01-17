@@ -51,6 +51,12 @@ local default_config = {
       ["<C-j>"] = "ScrollOutputDown",
       ["q"] = "Close",
     },
+    status_icons = {
+      RUNNING = "󱖏",
+      SUCCESS = "󰄬",
+      PENDING = "",
+      FAILURE = "",
+    },
   },
   -- See :help overseer-actions
   actions = {},
