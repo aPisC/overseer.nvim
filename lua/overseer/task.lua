@@ -1,6 +1,7 @@
 local component = require("overseer.component")
 local config = require("overseer.config")
 local constants = require("overseer.constants")
+local config = require("overseer.config")
 local form_utils = require("overseer.form.utils")
 local layout = require("overseer.layout")
 local log = require("overseer.log")
@@ -164,9 +165,12 @@ function Task:render(lines, highlights, detail)
     lines = { lines, "t" },
     detail = { detail, "n" },
   })
-  table.insert(lines, string.format("%s: %s", self.status, self.name))
-  table.insert(highlights, { "Overseer" .. self.status, #lines, 0, string.len(self.status) })
-  table.insert(highlights, { "OverseerTask", #lines, string.len(self.status) + 2, -1 })
+  
+  local status_icon = config.task_list.status_icons[self.status] or self.status
+
+  table.insert(lines, string.format("%s  %s", status_icon, self.name))
+  table.insert(highlights, { "Overseer" .. self.status, #lines, 0, string.len(status_icon) })
+  table.insert(highlights, { "OverseerTask", #lines, string.len(status_icon) + 2, -1 })
 
   if self.strategy.render then
     self.strategy:render(lines, highlights, detail)
